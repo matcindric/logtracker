@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+    xmlns:h="http://xmlns.jcp.org/jsf/html" 
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:sec="http://www.springframework.org/security/tags">
+    
+    <body>
+
+        <ui:composition template="./predlozak.xhtml">
+
+            <ui:define name="naslov">
+                Novi korisnik
+            </ui:define>
+
+            <ui:define name="top">
+                
+            </ui:define>
+
+            <ui:define name="content">                
+                
+                <h:form styleClass="novi-korisnik"> <!-- action="login" method='POST' -->
+                    <div class="frm">
+                        <p:panel>
+                            <p:outputLabel class="naslovLbl" value="Novi korisnik" /><br /><br />
+                            <p:messages id="messages" globalOnly="true" showDetail="true" closable="true" />
+                            <h:panelGrid columns="3">
+                                <p:outputLabel for="korime" value="Korisničko ime:" />
+                                <p:inputText id="korime" value="#{userView.username}" 
+                                    required="true" requiredMessage="Unos polja je obvezan!" />
+                                <p:message for="korime" display="text"/>
+                                <p:outputLabel for="lozinka" value="Lozinka:" />
+                                <p:password id="lozinka" value="#{userView.password}" 
+                                    required="true" requiredMessage="Unos polja je obvezan!" />
+                                <p:message for="lozinka" display="text"/>
+                                <p:outputLabel for="ponovljenaLozinka" value="Ponovljena lozinka:" />
+                                <p:password id="ponovljenaLozinka" value="#{userView.repeatedPassword}" 
+                                    required="true" requiredMessage="Unos polja je obvezan!" />
+                                <p:message for="ponovljenaLozinka" display="text"/>
+                                <p:outputLabel value="" />
+                                <p:commandButton value="Kreiraj korisnika" action="#{userView.saveUser()}" ajax="false" />
+                            </h:panelGrid>
+                        </p:panel>                      
+                    </div>
+                           
+                </h:form>
+                
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+     
+</html>

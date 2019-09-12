@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+    xmlns:h="http://xmlns.jcp.org/jsf/html" 
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui" >
+    
+    <body>
+
+        <ui:composition template="./predlozak.xhtml">
+
+            <ui:define name="naslov">
+                Nova lozinka
+            </ui:define>
+
+            <ui:define name="top">
+                
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form> <!-- action="login" method='POST' -->
+                    <div class="frm" >
+                        <p:panel>
+                            <p:outputLabel class="naslovLbl" value="Nova lozinka" /><br /><br />
+                            <p:messages id="messages" globalOnly="true" showDetail="true" closable="true"/>
+                            <h:panelGrid columns="3">
+                                <p:outputLabel for="novaLozinka" value="Nova lozinka:" />
+                                <p:password id="novaLozinka" value="#{userView.newPassword}" 
+                                    required="true" requiredMessage="Unos polja Nova lozinka je obvezan!" />
+                                <p:message for="novaLozinka" display="text"/>
+                                <p:outputLabel for="ponovljenaLozinka" value="Ponovljena lozinka:" />
+                                <p:password id="ponovljenaLozinka" value="#{userView.repeatedPassword}" 
+                                    required="true" requiredMessage="Unos polja Ponovljena lozinka je obvezan!" />
+                                <p:message for="ponovljenaLozinka" display="text"/>
+                                <p:outputLabel value="" />
+                                <p:commandButton value="Ažuriraj lozinku" action="#{userView.updatePassword()}" ajax="false" />
+                            </h:panelGrid>
+                        </p:panel>
+                        
+                        
+                        
+                    </div>                            
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body> 
+    
+</html>

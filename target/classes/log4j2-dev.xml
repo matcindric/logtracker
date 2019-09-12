@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE RelativeLayout>
+
+<Configuration>
+	<Properties>
+        <Property name="LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} %5p 18737 --- [%t] %-40.40logger{39} : %m%n%wEx</Property>
+    </Properties>
+    
+	<Appenders> 
+	
+		<Console name="Console">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>                
+	    
+	    <RollingFile name="RollingFile" 
+	    			fileName="logtracker.log" 
+	    			filePattern="logs/logtracker.%d{dd-MMM}.log.gz" >	    	
+		    <PatternLayout pattern="${LOG_PATTERN}"/>
+		    <Policies>
+		        <TimeBasedTriggeringPolicy interval="1"/>
+		    </Policies>
+		    <DefaultRolloverStrategy max="5" />
+		</RollingFile>
+	 
+		<SMTP name="SmtpAppender" 
+	        to="" 
+	        from=""
+	        smtpHost="smtp.gmail.com" 
+	        smtpPort="465"
+	        bufferSize="4"
+	        smtpUsername=""
+	        smtpPassword=""
+	        smtpProtocol="smtps"
+	        ignoreExceptions="false" 
+	        subject="Error Alert - NS">
+	        
+	        <ThresholdFilter level="ERROR" onMatch="ACCEPT"/> 
+            <HTMLLayout charset="UTF-8" title="Logtracker Logs" pattern="%date" />  
+        </SMTP>        
+
+  	</Appenders>
+
+	<Loggers>
+		<Root level="INFO">
+			<AppenderRef ref="Console"/>
+			<AppenderRef ref="RollingFile"/>
+			<AppenderRef ref="SmtpAppender" />
+		</Root>
+	</Loggers>
+</Configuration>

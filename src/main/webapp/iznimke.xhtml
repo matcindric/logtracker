@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+    xmlns:h="http://xmlns.jcp.org/jsf/html" 
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+    
+    <body>
+
+        <ui:composition template="./predlozak.xhtml">
+
+            <ui:define name="naslov">
+                Iznimke
+            </ui:define>
+
+            <ui:define name="top">
+                
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form id="form">
+                    <p:panel header="Pretraživanje" toggleable="true">
+                        <p:messages id="messages" showDetail="true" closable="true" />
+                        <h:panelGrid columns="2">
+                            <p:outputLabel value="Vrijeme:" />
+                            <p:outputLabel value="" />
+                            <p:outputLabel value="Od:" style="margin-left:40px;"/>
+                            <p:calendar value="#{exceptionView.timeFrom}" pattern="dd/MM/yyyy HH:mm:ss" showOn="button" readonlyInput="true"/>
+                            <p:outputLabel value="Do:" style="margin-left:40px;"/>
+                            <p:calendar value="#{exceptionView.timeTo}" pattern="dd/MM/yyyy HH:mm:ss" showOn="button" readonlyInput="true"/>
+                            <p:outputLabel value="Naziv iznimke:" />
+                            <p:inputText value="#{exceptionView.exceptionName}" style="width:97.5%;"/>
+                            <p:outputLabel value="Stack trace:" />
+                            <p:inputTextarea value="#{exceptionView.stackTrace}" rows="6" cols="50" autoResize="false"/>
+                            <p:outputLabel for="file" value="Datoteka:" />
+                                <p:selectOneMenu id="file" value="#{exceptionView.file}" style="width:91%;">
+                                    <f:selectItem itemLabel="" itemValue="#{null}" />
+                                    <f:selectItems value="#{exceptionView.files}" />
+                                </p:selectOneMenu>
+                            <p:outputLabel value="Riješeno:" />
+                            <p:selectOneButton value="#{exceptionView.solvedSearch}">
+                                <f:selectItem itemLabel="DA" itemValue="1" />
+                                <f:selectItem itemLabel="NE" itemValue="-1" />
+                                <f:selectItem itemLabel="Sve" itemValue="0" />
+                            </p:selectOneButton>                          
+                            <p:outputLabel value="" />
+                            <h:panelGrid columns="2">
+                                <p:commandButton value="PRETRAŽI" action="#{exceptionView.search()}" update="@(.zapis-iznimke)" ajax="false" />
+                                <p:commandButton value="Očisti unos" action="#{exceptionView.cleanInput()}" update="@(.zapis-iznimke)" ajax="false"/>
+                            </h:panelGrid>
+                            
+                        </h:panelGrid>
+                    </p:panel>
+
+                    <br />
+                    <br />
+                        
+                    <br/><br/>
+                    <p:dataTable id="zapisIznimke" var="iznimka" value="#{exceptionView.exceptions}"
+                        rows="10" paginator="true" styleClass="zapis-iznimke">
+                        <p:column headerText="Riješeno" style="width:70px;">
+                            <p:selectBooleanCheckbox value="#{iznimka.solved}">
+                                <p:ajax execute="@this" listener="#{exceptionView.saveState(iznimka.idException)}"/>
+                                <!-- <p:attribute name="iznimka" value="#{iznimka}" />-->
+                            </p:selectBooleanCheckbox>              
+                        </p:column>
+                        <p:column headerText="Naziv iznimke">
+                            <h:outputText value="#{iznimka.exceptionName}" />
+                        </p:column>
+                        <p:column headerText="Linija događaja">
+                            <h:outputText value="#{iznimka.breakLine}" />
+                        </p:column>
+                        <p:column headerText="Stack trace" style="width:70px;">
+                            <p:commandButton icon="fa fa-info" update=":form:iznimkaDetalji" oncomplete="PF('stackDialog').show();"
+                                    style="margin-left:27%;">
+                                <f:setPropertyActionListener value="#{iznimka}" target="#{exceptionView.oznacenaIznimka}" />
+                            </p:commandButton>
+                        </p:column>
+                        <p:column headerText="Vrijeme iznimke" style="width:70px;">
+                            <p:commandButton icon="fa fa-info" update=":form:iznimkaVrijemeDetalji" action="#{exceptionTimeView.prikaziVrijemeIznimke(iznimka.idException)}" 
+                                    oncomplete="PF('vrijemeDialog').show();" style="margin-left:27%;">
+                                <f:setPropertyActionListener value="#{iznimka}" target="#{exceptionTimeView.oznacenaIznimka}" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                    
+                    <p:dialog header="Stack trace" widgetVar="stackDialog" modal="true" width="1000px" height="400px">
+                        <p:outputPanel id="iznimkaDetalji">
+                            <h:outputText value="#{exceptionView.oznacenaIznimka.stackTrace}" />
+                        </p:outputPanel>               
+                    </p:dialog>
+                    
+                    <p:dialog header="Vrijeme" widgetVar="vrijemeDialog" modal="true" position="center" width="300px" height="400px">
+                        <p:outputPanel id="iznimkaVrijemeDetalji">
+                            <p:dataTable var="vrijeme" value="#{exceptionTimeView.exceptionTime}">
+                                <p:column>
+                                    <h:outputText value="#{vrijeme.time}" />
+                                </p:column>
+                            </p:dataTable>                            
+                        </p:outputPanel>               
+                    </p:dialog>
+                              
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+
+</html>

@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+    xmlns:h="http://xmlns.jcp.org/jsf/html" 
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+    
+    <body>
+
+        <ui:composition template="./predlozak.xhtml">
+
+            <ui:define name="naslov">
+                Iznimke
+            </ui:define>
+
+            <ui:define name="top">
+                
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form id="form">                   
+                    <p:dataTable styleClass="korisniciTbl" var="korisnik" value="#{userView.users}" rows="25" paginator="true">
+                        <p:column headerText="Korisnici" >
+                            <h:panelGrid columns="2">
+                                <h:outputText value="#{korisnik.username}" />
+                                <p:commandButton  icon="fa fa-pencil" actionListener="#{userView.openDialog()}">
+                                    <f:setPropertyActionListener value="#{korisnik}" target="#{userView.oznaceniKorisnik}" />
+                                </p:commandButton>
+                            </h:panelGrid>                   
+                        </p:column>                       
+                    </p:dataTable>
+                </h:form>
+                    
+                    <h:form>
+                        <p:dialog widgetVar="novaLozinkaDialog" modal="true" closable="false" width="680px" height="300px"> 
+                            <div class="frmDialog" >
+                                <p:panel header="Nova lozinka">
+                                    <p:outputPanel id="novaLozinkaDetalji">
+                                        <p:messages id="messages" styleClass="poruka-dialog" globalOnly="true" redisplay="false" showDetail="true" />
+                                        <h:panelGrid columns="3">
+                                            <p:outputLabel for="novaLozinka" value="Nova lozinka:" />
+                                            <p:password id="novaLozinka" value="#{userView.newPassword}" 
+                                                required="true" requiredMessage="Unos polja je obvezan!" >   
+                                            </p:password>
+                                            <p:message for="novaLozinka" styleClass="poruka-dialog" display="text"/>
+                                            <p:outputLabel for="ponovljenaLozinka" value="Ponovljena lozinka:" />
+                                            <p:password id="ponovljenaLozinka" value="#{userView.repeatedPassword}" 
+                                                required="true" requiredMessage="Unos polja je obvezan!" >  
+                                            </p:password>
+                                            <p:message for="ponovljenaLozinka" styleClass="poruka-dialog" display="text" />
+                                            <p:commandButton value="Ažuriraj lozinku" update="@(.poruka-dialog)"
+                                                action="#{userView.updateUserPassword(userView.oznaceniKorisnik.idUser, userView.oznaceniKorisnik.username)}" />
+                                            <p:commandButton value="Izlaz" ajax="false" immediate="true" 
+                                                action="#{userView.closeDialog()}" >
+                                                    <p:resetInput target="novaLozinkaDetalji" />    
+                                            </p:commandButton>
+                                        </h:panelGrid> 
+                                   </p:outputPanel>
+                                </p:panel>                             
+                            </div>                                                           
+                        </p:dialog>
+                    </h:form>        
+                
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+
+</html>
