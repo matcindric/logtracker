@@ -1,6 +1,8 @@
 package com.eccos.nadzorniservis.view;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -13,7 +15,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.eccos.nadzorniservis.models.ExceptionFile;
 import com.eccos.nadzorniservis.models.UserModel;
+import com.eccos.nadzorniservis.services.ExceptionFileService;
 import com.eccos.nadzorniservis.services.UserService;
 import com.eccos.nadzorniservis.utils.UserSessionUtils;
 import com.eccos.nadzorniservis.validators.UserValidator;
@@ -34,6 +38,9 @@ public class UserView {
     
     @Autowired
     UserService userService;
+    
+    @Autowired
+    ExceptionFileService exceptionFileService;
     
     UserValidator validator = new UserValidator();
     
@@ -74,6 +81,8 @@ public class UserView {
                         user.setUsername(username);
                         user.setPassword(encoder.encode(password));
                         user.setRole(UserModel.userRole);
+                        Set<ExceptionFile> exceptions = new HashSet<ExceptionFile>(exceptionFileService.findAll());
+                        user.setExceptions(exceptions);
                         userService.save(user);
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Korisnik " + username + " je uspješno kreiran!"));
                         clear();  

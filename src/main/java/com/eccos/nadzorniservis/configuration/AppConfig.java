@@ -35,6 +35,9 @@ public class AppConfig {
     @Value("#{'${date.format}'}")
     private String dateFormat;
     
+    @Value("#{'${mail.from}'}")
+    private String mailFrom;
+    
     
     @Value("#{'${server.port}'}")
     private int serverHttpsPort;
@@ -133,6 +136,16 @@ public class AppConfig {
     
     public void setDateFormat(String dateFormat) {
         this.dateFormat = dateFormat;
+    }
+    
+    
+    public String getMailFrom() {
+        return mailFrom;
+    }
+    
+    
+    public void setMailFrom(String mailFrom) {
+        this.mailFrom = mailFrom;
     }
 
 

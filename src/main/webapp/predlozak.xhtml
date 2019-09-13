@@ -29,22 +29,22 @@
                     <h:form>
                         <p:menubar styleClass="menu">
                             <sec:authorize access="hasRole('USER')" >
-                                <p:menuitem value="Početna" icon="fa fa-home" url="/home.xhtml" />
+                                <p:menuitem value="Početna" url="/home.xhtml" />
                             </sec:authorize>
                             <sec:authorize access="hasRole('USER')" >
-                                <p:menuitem value="Iznimke" icon="fa fa-list-alt" url="/iznimke.xhtml"/>
+                                <p:menuitem value="Iznimke" url="/iznimke.xhtml"/>
                             </sec:authorize>
                             <sec:authorize access="hasRole('ADMIN')" >
-                                <p:submenu label="Korisnici" icon="fa fa-user">
+                                <p:submenu label="Korisnici">
                                     <p:menuitem value="Popis korisnika" icon="fa fa-user" url="/korisnici.xhtml" />
                                     <p:menuitem value="Novi korisnik" icon="fa fa-user-plus" url="/noviKorisnik.xhtml" />
                                 </p:submenu>
                             </sec:authorize>
                             <sec:authorize access="hasRole('USER')">
-                                <p:menuitem value="Nova lozinka" icon="fa fa-key" url="/novaLozinka.xhtml" />
+                                <p:menuitem value="Nova lozinka" url="/novaLozinka.xhtml" />
                             </sec:authorize>
                             <sec:authorize access="hasRole('USER')">
-                                <p:menuitem value="Odjava" icon="fa fa-sign-out" action="#{loginView.logout()}" />
+                                <p:menuitem value="Odjava" action="#{loginView.logout()}" />
                             </sec:authorize>
                             <sec:authorize access="hasRole('ADMIN')">
                                 <p:submenu label="Mogućnosti" style="float:right;font-size:small;">

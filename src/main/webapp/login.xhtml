@@ -16,12 +16,12 @@
     
     <h:body>
         <h:form prependId="false"> <!-- action="login" method='POST' -->
-            <p:outputLabel class="naslovLbl" value="PRIJAVA" /><br /><br />
+            <p:outputLabel class="naslovLbl" value="PRIJAVA" style="font-size: 35px;"/><br /><br />
             <p:outputLabel value="Neuspjesna prijava!" rendered="${!empty param['error']}" styleClass="red" />
             <h:panelGrid class="pg" columns="1" >
-                <p:inputText id="username" placeholder="Korisničko ime" />
-                <p:password id="password" placeholder="Lozinka" />
-                <p:commandButton value="Prijavi se" action="#{loginView.login()}" ajax="false" />
+                <p:inputText id="username" placeholder="Korisničko ime" style="margin-top:10px;height:30px;width:300px"/>
+                <p:password id="password" placeholder="Lozinka" style="margin-top:10px;height:30px;width:300px" />
+                <p:commandButton value="Prijavi se" action="#{loginView.login()}" ajax="false" style="margin-top:20px"/>
             </h:panelGrid>        
         </h:form>
     </h:body>

@@ -23,14 +23,14 @@
 		</RollingFile>
 	 
 		<SMTP name="SmtpAppender" 
-	        to="" 
-	        from=""
-	        smtpHost="smtp.gmail.com" 
-	        smtpPort="465"
+	        to="admin@gmail.com" 
+	        from="info@logtracker.com"
+	        smtpHost="127.0.0.1" 
+	        smtpPort="25"
 	        bufferSize="4"
 	        smtpUsername=""
 	        smtpPassword=""
-	        smtpProtocol="smtps"
+	        smtpProtocol=""
 	        ignoreExceptions="false" 
 	        subject="Error Alert - NS">
 	        

@@ -46,9 +46,6 @@ public class WatchThread extends Thread {
     private AppConfig appConfig;
     
     @Autowired
-    TxtParsingFile txtParsingFile;
-    
-    @Autowired
     HTMLParsingFile htmlParsingFile;
     
     @Autowired
@@ -142,11 +139,6 @@ public class WatchThread extends Thread {
         ExceptionTime exceptionTime;
         Exception exception;
         
-        //ZA PARSIRANJE TXT FILE-A
-        //txtParsingFile.parsingFile(appConfig.getFile());
-        //listExceptionTimeAll = txtParsingFile.listExceptionTime;
-        
-        //ZA PARSIRANJE HTML FILE-A
         htmlParsingFile.setLogLevel(logLevel);
         htmlParsingFile.parsingHTMLFile(file);
         listExceptionTimeAll = htmlParsingFile.listExceptionTime;
@@ -331,6 +323,7 @@ public class WatchThread extends Thread {
         
         for (int j = 0; j < appConfig.getEmailReceipients().size(); j++) {
             Email email = new Email();
+            email.setFrom(appConfig.getMailFrom());
             email.setTo(appConfig.getEmailReceipients().get(j));
             email.setSubject(subject);
             email.setMessage(emailService.constructHTMLTemplateEmailBody("email/template-1", context));

@@ -1,9 +1,14 @@
 package com.eccos.nadzorniservis.models;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -26,6 +31,10 @@ public class UserModel {
     
     @Column(name="role")
     private String role;
+    
+    @ManyToMany
+    @JoinTable (name = "user_exception", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_exception_file"))
+    Set<ExceptionFile> exceptions;
     
     public UserModel() {
         
@@ -81,4 +90,15 @@ public class UserModel {
     public void setRole(String role) {
         this.role = role;
     } 
+
+    
+    public Set<ExceptionFile> getExceptions() {
+        return exceptions;
+    }
+
+    
+    public void setExceptions(Set<ExceptionFile> exceptions) {
+        this.exceptions = exceptions;
+    }
+
 }
